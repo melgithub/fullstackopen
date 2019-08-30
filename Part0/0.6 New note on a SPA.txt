@@ -1,0 +1,8 @@
+TITLE User creates new note (SPA)
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note over server:
+Request contained the new note as JSON-data with content and date
+Server parses the data (as the Content-Type header specifies it as JSON) 
+end note
+server-->browser:  201 status - created new note from JSON data 
+end note
