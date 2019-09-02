@@ -1,1 +1,1 @@
-This is the repo for my Full Stack Open coursework.
+This is the mostly example exercises for Full Stack Open.
