@@ -73,7 +73,7 @@ const Part1 = (props) => {
     )
 }
 const Part2 = (props) => {
-    console.log("grabs Part1 component")
+    console.log("grabs Part2 component")
     return (
         <div>
             <p>
@@ -83,7 +83,7 @@ const Part2 = (props) => {
     )
 }
 const Part3 = (props) => {
-    console.log("grabs Part1 component")
+    console.log("grabs Part3 component")
     return (
         <div>
             <p>
