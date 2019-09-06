@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
 const App = () => {
-    // save clicks of each button to own state
+    // Save clicks of each button to own state
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
     const [poor, setPoor] = useState(0)
+
     const [allFeedback, setAll] = useState([])
 
-    // event handler methods
+    // Event handler methods
     const positiveFeedback = () => {
         console.log('Positive feedback sent.')
         setGood(good + 1)
@@ -27,11 +28,13 @@ const App = () => {
 
     return (
         <div>
-            <h1>Unicafe: Step 4</h1>
+            <h1>Unicafe: Step 5</h1>
             <h2>Provide feedback:</h2>
-            <button onClick={positiveFeedback}>Good</button>
-            <button onClick={neutralFeedback}>Neutral</button>
-            <button onClick={negativeFeedback}>Poor</button>
+
+            <Button handleFeedback={() => positiveFeedback()} text="Good" />
+            <Button handleFeedback={() => neutralFeedback()} text="Neutral"/>
+            <Button handleFeedback={() => negativeFeedback()} text="Poor"/>
+
             <Statistics
                 good={good}
                 neutral={neutral}
@@ -41,7 +44,14 @@ const App = () => {
         )
      }
 
-// New statistics component. Also implemented conditional rendering.     
+// New button component 
+const Button = (props) => {
+    return (
+        <button onClick={props.handleFeedback}>{props.text}</button>
+    )
+}
+
+// New statistics component. Also implemented conditional rendering.
 const Statistics = (props) => {
 
     if (props.allFeedback.length === 0) {
