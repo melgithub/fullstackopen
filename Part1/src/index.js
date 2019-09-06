@@ -25,10 +25,9 @@ const App = () => {
         setAll(allFeedback.concat(-1))
     }
 
-    // app returns...
     return (
         <div>
-            <h1>Unicafe: Step 3</h1>
+            <h1>Unicafe: Step 4</h1>
             <h2>Provide feedback:</h2>
             <button onClick={positiveFeedback}>Good</button>
             <button onClick={neutralFeedback}>Neutral</button>
@@ -41,8 +40,18 @@ const App = () => {
         </div>
         )
      }
-        
+
+// New statistics component. Also implemented conditional rendering.     
 const Statistics = (props) => {
+
+    if (props.allFeedback.length === 0) {
+        return (
+            <div>
+                <br></br>
+                No feedback has been provided yet.
+            </div>
+        )
+    }
     return (
         <div>
             <h2>Statistics</h2>
