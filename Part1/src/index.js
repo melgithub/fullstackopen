@@ -28,22 +28,32 @@ const App = () => {
     // app returns...
     return (
         <div>
-            <h1>Unicafe: Step 2</h1>
-
+            <h1>Unicafe: Step 3</h1>
             <h2>Provide feedback:</h2>
             <button onClick={positiveFeedback}>Good</button>
             <button onClick={neutralFeedback}>Neutral</button>
             <button onClick={negativeFeedback}>Poor</button>
-
-            <h2>Statistics</h2>
-            Good: {good}<br></br>
-            Neutral: {neutral}<br></br>
-            Poor: {poor}<br></br>
-            All: {allFeedback.length}<br></br>
-            Average: {(good * 1 + poor * -1) / allFeedback.length} < br ></br>
-            Positive: {good / allFeedback.length * 100}%
+            <Statistics
+                good={good}
+                neutral={neutral}
+                poor={poor}
+                allFeedback={allFeedback} />
         </div>
-    )
+        )
+     }
+        
+const Statistics = (props) => {
+    return (
+        <div>
+            <h2>Statistics</h2>
+            Good: {props.good}<br></br>
+            Neutral: {props.neutral}<br></br>
+            Poor: {props.poor}<br></br>
+            All: {props.allFeedback.length}<br></br>
+            Average: {(props.good * 1 + props.poor * -1) / props.allFeedback.length} < br ></br>
+            Positive: {props.good / props.allFeedback.length * 100}%
+        </div>
+        )
 }
 
 ReactDOM.render(<App />,
