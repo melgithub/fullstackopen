@@ -35,6 +35,13 @@ const App = () => {
             <Button handleFeedback={() => neutralFeedback()} text="Neutral"/>
             <Button handleFeedback={() => negativeFeedback()} text="Poor"/>
 
+            <Statistics text="Good:" value={good} allFeedback={allFeedback} />
+            <Statistics text="Neutral:" value={neutral} allFeedback={allFeedback} />
+            <Statistics text="Poor:" value={poor} allFeedback={allFeedback} />
+            <Statistics text="All:" value={allFeedback.length} allFeedback={allFeedback} />
+            <Statistics text="Avg:" value={(good * 1 + poor * -1) / allFeedback.length} allFeedback={allFeedback} />
+            <Statistics text="Positive:" value={good / allFeedback.length * 100} allFeedback={allFeedback} />
+
             <Statistics
                 good={good}
                 neutral={neutral}
@@ -54,23 +61,24 @@ const Button = (props) => {
 // New statistics component. Also implemented conditional rendering.
 const Statistics = (props) => {
 
-    if (props.allFeedback.length === 0) {
+    if (props.text === "All:" && props.allFeedback.length === 0) {
         return (
             <div>
                 <br></br>
-                No feedback has been provided yet.
+                No feedback has been provided yet. Please send some!
+            </div>
+        )
+    }
+    else if (props.allFeedback.length === 0) {
+        return (
+            <div>
             </div>
         )
     }
     return (
         <div>
-            <h2>Statistics</h2>
-            Good: {props.good}<br></br>
-            Neutral: {props.neutral}<br></br>
-            Poor: {props.poor}<br></br>
-            All: {props.allFeedback.length}<br></br>
-            Average: {(props.good * 1 + props.poor * -1) / props.allFeedback.length} < br ></br>
-            Positive: {props.good / props.allFeedback.length * 100}%
+            <br></br>
+            {props.text} {props.value}
         </div>
         )
 }
