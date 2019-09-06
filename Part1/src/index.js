@@ -28,11 +28,11 @@ const App = () => {
 
     return (
         <div>
-            <h1>Unicafe: Step 5</h1>
+            <h1>Unicafe: Step 6</h1>
             <h2>Provide feedback:</h2>
 
-            <Button handleFeedback={() => positiveFeedback()} text="Good" />
-            <Button handleFeedback={() => neutralFeedback()} text="Neutral"/>
+            <Button handleFeedback={() => positiveFeedback()} text="Good" /> 
+            <Button handleFeedback={() => neutralFeedback()} text="Neutral"/> 
             <Button handleFeedback={() => negativeFeedback()} text="Poor"/>
 
             <Statistics text="Good:" value={good} allFeedback={allFeedback} />
@@ -40,7 +40,7 @@ const App = () => {
             <Statistics text="Poor:" value={poor} allFeedback={allFeedback} />
             <Statistics text="All:" value={allFeedback.length} allFeedback={allFeedback} />
             <Statistics text="Avg:" value={(good * 1 + poor * -1) / allFeedback.length} allFeedback={allFeedback} />
-            <Statistics text="Positive:" value={good / allFeedback.length * 100} allFeedback={allFeedback} />
+            <Statistics text="% Positive:" value={good / allFeedback.length * 100} allFeedback={allFeedback} />
 
             <Statistics
                 good={good}
@@ -77,8 +77,16 @@ const Statistics = (props) => {
     }
     return (
         <div>
-            <br></br>
-            {props.text} {props.value}
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>{props.text}</td>
+                            <td>{props.value}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         )
 }
