@@ -1,27 +1,43 @@
 import React, { useState } from 'react'
 import ReactDOM from 'react-dom'
 
+// Our App Component
 const App = (props) => {
     const [selected, setSelected] = useState(0)
 
-    const randomizeQuote = () => {
-        setSelected(Math.floor(Math.random() * ((anecdotes.length-1) - 0 + 1)) + 0)
-    }
+    // Filling array with zeros
+    const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
-    console.log(anecdotes.length)
+    // Button Methods
+    // Randomize quote from array
+    const randomizeQuote = () => {
+        setSelected(Math.floor(Math.random() * ((anecdotes.length - 1) - 0 + 1)) + 0)
+    }
+    // Update setVotes array based on new votes
+    const addVote = () => {
+        const voteCopy = [...votes]
+        voteCopy[selected] += 1
+        setVotes(voteCopy)
+    }
 
     return (
         <div>
-            <h2>Random Anecdotes for Programmers</h2>
-            {props.anecdotes[selected]}<br></br>
+            <h2>Random Anecdotes for Programmers - 1.3</h2>
+            "{props.anecdotes[selected]}"<br></br>
+            Votes so far: {votes[selected]}<br></br><br></br>
+          
+            <Button
+                method={addVote}
+                text="Vote!" />
 
             <Button
                 method={randomizeQuote}
-                text="Randomize!"/>
+                text="Randomize!" />
         </div>
     )
 }
 
+// Other components
 const anecdotes = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -41,6 +57,7 @@ const Button = (props) => {
     )
 }
 
+// Rendering behavior
 ReactDOM.render(
     <App anecdotes={anecdotes} />,
     document.getElementById('root')
