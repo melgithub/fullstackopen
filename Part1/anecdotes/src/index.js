@@ -8,6 +8,7 @@ const App = (props) => {
     // Filling array with zeros
     const [votes, setVotes] = useState(new Array(anecdotes.length).fill(0))
 
+
     // Button Methods
     // Randomize quote from array
     const randomizeQuote = () => {
@@ -20,9 +21,22 @@ const App = (props) => {
         setVotes(voteCopy)
     }
 
+    const getMaxVotes = (props) => {
+        let max = props[0]
+        let index = 0
+
+        for (let i = 1; i < props.length; i++) {
+            if (props[i] > max) {
+                max = props[i]
+                index = i
+            }
+        }
+        return index
+    }
+
     return (
         <div>
-            <h2>Random Anecdotes for Programmers - 1.13</h2>
+            <h2>Random Anecdotes for Programmers - 1.14</h2>
             "{props.anecdotes[selected]}"<br></br>
             Votes so far: {votes[selected]}<br></br><br></br>
           
@@ -33,7 +47,10 @@ const App = (props) => {
             <Button
                 method={randomizeQuote}
                 text="Randomize!" />
-        </div>
+            <h3>Most Popular Anecdote</h3>
+            {props.anecdotes[getMaxVotes(votes)]}<br></br>
+            Votes: {votes[getMaxVotes(votes)]}
+            </div>
     )
 }
 
