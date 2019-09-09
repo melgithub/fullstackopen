@@ -22,7 +22,7 @@ const App = (props) => {
 
     return (
         <div>
-            <h2>Random Anecdotes for Programmers - 1.3</h2>
+            <h2>Random Anecdotes for Programmers - 1.13</h2>
             "{props.anecdotes[selected]}"<br></br>
             Votes so far: {votes[selected]}<br></br><br></br>
           
