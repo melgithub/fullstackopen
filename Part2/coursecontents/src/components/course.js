@@ -39,11 +39,8 @@ const Total = ({ parts }) => {
     // 0 is initial value, then we add each of the others.
     return (
         <div>
-            <p> <b>Total exercises:</b> {parts.reduce((accumulator, currentValue) =>
-                {
-                    console.log(accumulator, currentValue.exercises)
-                    return accumulator + currentValue.exercises;
-                }, 0)} </p>
+            <p> <b>Total exercises:</b>
+            {parts.reduce((accumulator, currentValue) => accumulator + currentValue.exercises, 0)} </p>
         </div>
     )
 }
