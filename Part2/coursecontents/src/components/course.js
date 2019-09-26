@@ -35,8 +35,9 @@ const Part = ({ name, exercises }) => {
 }
 
 const Total = ({ parts }) => {
-    // Take source array (parts), iterates through each index producing a value which it saves in accumulator
-    // 0 is initial value, then we add each of the others.
+    // Using Reduce to sum
+    // Takes source array (parts), starts at 0,
+    // iterates through each index producing a value which it saves in accumulator.
     return (
         <div>
             <p> <b>Total exercises:</b>
