@@ -1,31 +1,36 @@
 import React from 'react'
 
-const Course = props => (
-    <div>
-        <Header course={props.course.name} />
-        <Content parts={props.course.parts} />
-    </div>
-)
+// Component solely responsible for formatting a single course.
+// Includes other components within it.
 
-const Part = props =>
-    <p>{props.part.name} {props.part.exercises} ID:{props.part.id}</p>
+const Course = ({ course }) => {
+    return (
+        <div>
+            <Header name={course.name} />
+            <Content parts={course.parts} />
+        </div>
+    )
+}
 
-const Header = props =>
-    <h1>{props.course}</h1>
+const Header = ({ name }) => <h1>{name}</h1>
 
+const Content = ({ parts }) => {
+    return (
+        <div>
+            {parts.map(specificPart => <Part
+                key={specificPart.id}
+                name={specificPart.name}
+                exercises={specificPart.exercises} />)}
+        </div>
+    )
+}
 
-const Content = props => (
-    <div>
-        <Part part={props.parts[0]} />
-        <Part part={props.parts[1]} />
-        <Part part={props.parts[2]} />
-    </div>
-)
-
-//const Total = props => {
-//    const total = props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises
-
-//    return <p>Total exercises: {total}</p>
-//}
+const Part = ({ name, exercises }) => {
+    return (
+        <div>
+            <p>{name} - {exercises} </p>
+        </div>
+    )
+}
 
 export default Course
