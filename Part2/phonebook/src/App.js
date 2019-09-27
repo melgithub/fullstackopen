@@ -5,19 +5,31 @@ const App = () => {
   // array, starts empty.
   const [ persons, setPersons] = useState([])
   // new person name, pre-filled with a message.
-  const [ newName, setNewName ] = useState('Type your name')
+  const [ newName, setNewName ] = useState('')
+
 
   // button event handler
   const addPerson = (event) => {
     event.preventDefault() // Stops page from refreshing when submitting
-    const personObject = { // New person object
-      name: newName,
-    }
 
-    setPersons(persons.concat(personObject)) // adds new person object to new array
-    setNewName('Type your name') // sets box back to this message after each submit
+    if (persons.find(person => person.name === newName))
+    {
+      window.alert(`${newName} is already in the phonebook!`);
+      setNewName('') 
+    }
+    else 
+    {
+      console.log('New Name: ', newName)
+
+      const personObject = { // Create new person object
+        name: newName,
+      }
+      setPersons(persons.concat(personObject)) // Adds person object to new array
+      setNewName('') 
+    }
   }
 
+  // Updates setNewName as user types in the form
   const handleNewPersonEvent = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -34,7 +46,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <form onSubmit={addPerson}> 
+      <form onSubmit={addPerson}
+            value={newName}> 
         <div>
           Name: <input
             value={newName}
