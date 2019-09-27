@@ -11,8 +11,7 @@ const App = () => {
   const addPerson = (event) => {
     event.preventDefault() // Stops page from refreshing when submitting
     const personObject = { // New person object
-      content: newName,
-      id: persons.length + 1, // Temporary solution to assign ID for each person
+      name: newName,
     }
 
     setPersons(persons.concat(personObject)) // adds new person object to new array
@@ -27,7 +26,7 @@ const App = () => {
   // Maps our persons array to our Person component
   const entry = () => persons.map(person => 
     <Person
-      key={person.id}
+      key={person.name}
       person={person}/>
       )
   
