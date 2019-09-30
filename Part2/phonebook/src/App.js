@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Entries from './Components/Entries'
+import axios from 'axios'
 
 const App = () => {
   // States
@@ -10,6 +11,18 @@ const App = () => {
   const [ newPhoneNumber, setNewPhoneNumber ] = useState('')
   const [ showAll, setShowAll] = useState(true) // true by default
   const [ filter, setFilter] = useState('') // contents of our filter
+
+  // Fetching persons from server
+  useEffect(() => {
+    console.log('Effect executed')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response=> {
+        console.log('Promise fulfilled!')
+        setPersons(response.data)
+      })
+  },[])
+  console.log('Rendered: ', persons.length, 'persons')
 
   // List generated based on state
   // If showAll is true, we show full list. Otherwise, we get a filtered list.
