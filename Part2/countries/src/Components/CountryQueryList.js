@@ -2,10 +2,13 @@ import React from 'react'
 
 // Component for the display of countries
 
-const CountryQueryList = (countryData) => {
+const CountryQueryList = (props) => {
     return (
     <div>
-      <label>- {countryData.name}</label> <button>Show</button>
+      <label>- {props.name}</label>
+       <button
+        value={props.name}
+        onClick={props.onClick}>Show</button>
     </div> 
     )
   }

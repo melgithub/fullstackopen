@@ -4,7 +4,7 @@ import CountryQueryList from './CountryQueryList'
 
 // Responsible for determining the display method for our countries
 
-const CountryDisplayLogic = ({ list }) => {
+const CountryDisplayLogic = ({ list, clickEvent }) => {
         if (list.length === 0 || list.length >= 250){
             return null
         }
@@ -17,6 +17,8 @@ const CountryDisplayLogic = ({ list }) => {
                 <CountryQueryList
                     key={country.name}
                     name={country.name}
+                    list={country}
+                    onClick={clickEvent}
                     />
                 )
             )
