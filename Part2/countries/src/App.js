@@ -25,9 +25,7 @@ const App = () => {
   console.log(countries.length, "countries")
 
   const handleShowButtonEvent = (event) => {
-    console.log("event happening onClick btn", event.value)
     setFilter(event.target.value.toLowerCase())
-    // set the filtered list equal to 1 with this country name only
   }
 
   const handleFilterEvent = (event) => {
