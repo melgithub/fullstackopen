@@ -5,7 +5,7 @@ import CountryQueryList from './CountryQueryList'
 // Responsible for determining the display method for our countries
 
 const CountryDisplayLogic = ({ list }) => {
-        if (list.length == 0 || list.length >= 250){
+        if (list.length === 0 || list.length >= 250){
             return null
         }
         else if (list.length > 10){
