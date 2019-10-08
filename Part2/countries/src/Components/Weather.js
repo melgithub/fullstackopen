@@ -3,15 +3,18 @@ import React from 'react'
 // Component for the display of weather data
 
 const Weather = (props) => {
+    
+    props.setData(props.capital)
+
     return (
       <div>
         <h2>Weather in {props.capital}</h2>
-        <p><b>Temperature:</b> add data</p>
-        <p><b>Wind:</b> add data</p>
+        <p><b>Temperature:</b> {props.temp} Celsius</p>
+        <p><b>Wind:</b> {props.wind} km / h</p>
         <img
           alt='weather icon'
-          width={50}
-          src={props.flag}/>
+          width={60}
+          src={props.icon}/>
       </div>
     )
   }

@@ -7,8 +7,8 @@ const CountryQueryList = (props) => {
     <div>
       <label>- {props.name}</label>
        <button
-        value={props.name}
-        onClick={props.onClick}>Show</button>
+          value={props.name}
+          onClick={props.onClick}>Show</button>
     </div> 
     )
   }

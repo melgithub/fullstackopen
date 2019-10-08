@@ -20,8 +20,12 @@ const CountryIndividual = (props) => {
               list={props.langauges}/>
         </ul>
         <Weather 
-          weather={props.weather}
-          capital={props.capital}/>
+          capital={props.capital}
+          setData={props.setData}
+          temp={props.temp}
+          wind={props.wind}
+          icon={props.icon}
+          />
       </div>
     )
   }

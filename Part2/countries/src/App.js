@@ -8,21 +8,12 @@ const App = () => {
   const [filter, setFilter] = useState('')
   const [showSearchResults, setShowSearchResults] = useState(false)
   const [countries, setCountries] = useState([]) 
+  const [currentTemp, setTemp] = useState('');
+  const [currentWind, setWind] = useState('');
+  const [currentIcon, setIcon] = useState('');
 
   // Data URL variables
   const restCountriesURL='https://restcountries.eu/rest/v2/all'
-
-  const weatherParams = {
-    access_key: '31e0cbac02e8a15a9cfd48af8ad7991d',
-    query: 'Los Angeles'
-  }
-  
-  axios.get('https://api.weatherstack.com/current', {weatherParams})
-  .then(response => {
-    console.log(`Current temperature in ${response.data.location.name} }`);
-  }).catch(error => {
-    console.log("Error message:",error);
-  });
 
   useEffect(() => {
     console.log('Effect executed')
@@ -34,6 +25,27 @@ const App = () => {
       })
     },[])
   console.log(countries.length, "countries")
+
+  let params = {
+    access_key: '31e0cbac02e8a15a9cfd48af8ad7991d',
+    query: ''
+  }
+
+  function setWeatherData(city) {
+    return(
+      params.query=city,
+      axios.get('http://api.weatherstack.com/current', {params})
+      .then(response => {
+        const r = response.data;
+        setTemp(r.current.temperature)
+        setWind(r.current.wind_speed)
+        setIcon(r.current.weather_icons)
+        console.log(`Current temperature in ${r.location.name} is ${r.current.temperature}℃`);
+      }).catch(error => {
+        console.log(error);
+      })
+    )
+  }
 
   // Modified array variable
   const countriesToShow = showSearchResults
@@ -61,7 +73,12 @@ const App = () => {
 
     <CountryDisplayLogic 
           list={countriesToShow}
-          clickEvent={handleShowButtonEvent}/>
+          clickEvent={handleShowButtonEvent}
+          setData={setWeatherData}
+          temp={currentTemp}
+          wind={currentWind}
+          icon={currentIcon}
+         />
     </div>
   )
 }
