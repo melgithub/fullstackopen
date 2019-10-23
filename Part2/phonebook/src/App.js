@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Entries from './Components/Entries'
-import axios from 'axios'
+import personService from './Services/persons' 
 
 const App = () => {
   // States
@@ -14,14 +14,13 @@ const App = () => {
 
   // Fetching persons from server
   useEffect(() => {
-    console.log('Effect executed')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response=> {
-        console.log('Promise fulfilled!')
+    personService
+      .getAll()
+      .then(response => {
         setPersons(response.data)
-      })
-  },[])
+    })
+  }, [])
+
   console.log('Rendered: ', persons.length, 'persons')
 
   // List generated based on state
@@ -43,13 +42,11 @@ const App = () => {
         name: newName,
         number: newPhoneNumber,
       }
-      // Using Post method to add our new personObject
-      axios
-      .post('http://localhost:3001/persons', personObject)
-      .then(response => {
-        console.log(response)
-      })
-      setPersons(persons.concat(personObject)) // Adds person object to new array
+      personService
+        .create(personObject)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+        })
     }
     setNewName('') 
     setNewPhoneNumber('') 
