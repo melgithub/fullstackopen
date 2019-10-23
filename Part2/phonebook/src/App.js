@@ -39,11 +39,16 @@ const App = () => {
     }
     else 
     {
-      console.log('New Name: ', newName)
       const personObject = { // Create new person object
         name: newName,
         number: newPhoneNumber,
       }
+      // Using Post method to add our new personObject
+      axios
+      .post('http://localhost:3001/persons', personObject)
+      .then(response => {
+        console.log(response)
+      })
       setPersons(persons.concat(personObject)) // Adds person object to new array
     }
     setNewName('') 
