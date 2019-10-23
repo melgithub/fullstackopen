@@ -52,6 +52,22 @@ const App = () => {
     setNewPhoneNumber('') 
   }
 
+  const deletePerson = (id, name) => {
+    console.log("Clicked delete " + id)
+    //window.confirm(`Permanently delete ${name}?`);
+    let confirmation = window.confirm(`Permanently delete ${name}?`);
+    if (confirmation){
+      personService
+      .handleDelete(id)
+      .then(
+        setPersons(persons.filter(person => person.id !== id))
+      )
+    }
+    else {
+      window.alert(`${name} was not deleted.`)
+    }
+  }
+
   // Updates setNewName, setPhoneNumber and setFilter as user types in the forms
   const handleNewPersonEvent = (event) => {
     console.log(event.target.value)
@@ -85,7 +101,8 @@ const App = () => {
       <h3>Numbers</h3>
       <ul>
         <Entries
-          list={peopleToShow}/>
+          list={peopleToShow}
+          buttonAction={deletePerson}/>
       </ul>
     </div>
   )
