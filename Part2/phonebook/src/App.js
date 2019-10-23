@@ -42,7 +42,7 @@ const App = () => {
       console.log('New Name: ', newName)
       const personObject = { // Create new person object
         name: newName,
-        phone: newPhoneNumber,
+        number: newPhoneNumber,
       }
       setPersons(persons.concat(personObject)) // Adds person object to new array
     }

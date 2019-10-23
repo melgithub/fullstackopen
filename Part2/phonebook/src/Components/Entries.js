@@ -8,6 +8,6 @@ list.map(person => (
 <Person
     key={person.name}
     name={person.name}
-    phone={person.phone}
+    number={person.number}
     />
 ))

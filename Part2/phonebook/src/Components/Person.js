@@ -2,9 +2,9 @@ import React from 'react'
 
 // Responsible for display of an individual person; used in the Entries component.
 
-const Person = ({ name, phone }) => {
+const Person = ({ name, number }) => {
     return (
-        <li>{name} - {phone}</li>
+        <li>{name} - {number}</li>
     )
 }
 
