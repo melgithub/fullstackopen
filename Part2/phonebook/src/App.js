@@ -21,8 +21,6 @@ const App = () => {
     })
   }, [])
 
-  console.log('Rendered: ', persons.length, 'persons')
-
   // List generated based on state
   // If showAll is true, we show full list. Otherwise, we get a filtered list.
   const peopleToShow = showAll
@@ -32,9 +30,24 @@ const App = () => {
   // Event handlers
   const addPerson = (event) => {
     event.preventDefault() // Stops page from refreshing when submitting
+    
     if (persons.find(person => person.name === newName))
     {
-      window.alert(`${newName} is already in the phonebook!`);
+      let confirmation = window.confirm(`${newName} already exists. Would you like to update their phone number?`);
+      if (confirmation){
+        // if YES
+        const person = persons.find(person => person.name === newName)
+        const changedPerson = { ...person, number: newPhoneNumber}
+        
+        personService
+        // Updating the backend
+        .update(person.id, changedPerson)
+        // Rendering to page
+        .then(response => {  
+          setPersons(persons.filter(person => person.name !== newName).concat(response.data))
+        }   
+        )
+      }
     }
     else 
     {

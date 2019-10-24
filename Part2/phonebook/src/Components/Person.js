@@ -4,7 +4,7 @@ import React from 'react'
 
 const Person = ({ name, number, buttonAction, id }) => {
     return (
-        <li>
+        <li key={id}>
             {name} - {number} 
             <button onClick={() => buttonAction(id, name)}>Delete</button>
         </li>
