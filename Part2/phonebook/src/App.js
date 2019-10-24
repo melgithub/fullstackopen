@@ -12,7 +12,8 @@ const App = () => {
   const [ newPhoneNumber, setNewPhoneNumber ] = useState('')
   const [ showAll, setShowAll] = useState(true) // true by default
   const [ filter, setFilter] = useState('') // contents of our filter
-  const [confirmationMessage, setConfirmationMessage] = useState(null)
+  const [confirmationMessage, setConfirmationMessage] = useState(null) // text to appear
+  const [ messageType, setMessageType ] = useState('') // msg type - success or error?
 
   // Fetching persons from server
   useEffect(() => {
@@ -20,14 +21,17 @@ const App = () => {
       .getAll()
       .then(response => {
         setPersons(response.data)
+    }) 
+    .catch(error => {
+      setMessageType('error')
+      setConfirmationMessage('Failed fetching data.')
     })
   }, [])
 
   // List generated based on state
-  // If showAll is true, we show full list. Otherwise, we get a filtered list.
   const peopleToShow = showAll
   ? persons
-  : persons.filter(person => person.name.toLowerCase().search(filter) !== -1) // -1 just means no match is found.
+  : persons.filter(person => person.name.toLowerCase().search(filter) !== -1)
 
   // Event handlers
   const addPerson = (event) => {
@@ -35,20 +39,20 @@ const App = () => {
     
     if (persons.find(person => person.name === newName))
     {
-      let confirmation = window.confirm(`${newName} already exists. Would you like to update their phone number?`);
-      if (confirmation){
-        // if YES
+      let confirm = window.confirm(`${newName} already exists. Would you like to update their phone number?`);
+      if (confirm){
         const person = persons.find(person => person.name === newName)
         const changedPerson = { ...person, number: newPhoneNumber}
         
         personService
-        // Updating the backend
-        .update(person.id, changedPerson)
-        // Rendering to page
-        .then(response => {  
+        .update(person.id, changedPerson) // Updating backend
+        .then(response => {  // Rendering to page
           setPersons(persons.filter(person => person.name !== newName).concat(response.data))
-        }   
-        )
+        })
+        .catch(error => {
+          setMessageType('error')
+          setConfirmationMessage(`${newName} has already been deleted from the server.`)
+        })
       }
     }
     else 
@@ -63,7 +67,7 @@ const App = () => {
           setPersons(persons.concat(response.data))
         })
     }
-
+    setMessageType('success')
     setConfirmationMessage(`Contact ${newName} updated.`)
     setTimeout(() => {
       setConfirmationMessage(null)
@@ -74,22 +78,26 @@ const App = () => {
   }
 
   const deletePerson = (id, name) => {
-    console.log("Clicked delete " + id)
-    //window.confirm(`Permanently delete ${name}?`);
     let confirmation = window.confirm(`Permanently delete ${name}?`);
     if (confirmation){
       personService
       .handleDelete(id)
       .then(
-        setPersons(persons.filter(person => person.id !== id))
+        setPersons(persons.filter(person => person.id !== id)),
+        setMessageType('success'),
+        setConfirmationMessage(`${name} deleted from the server.`),
+        setTimeout(() => {
+          setConfirmationMessage(null)
+        }, 5000)
       )
-    }
-    else {
-      window.alert(`${name} was not deleted.`)
+      .catch(error => {
+        setMessageType('error')
+        setConfirmationMessage(`${name} has already been deleted from the server.`)
+      })
     }
   }
 
-  // Updates setNewName, setPhoneNumber and setFilter as user types in the forms
+  // Updates setNewName, setPhoneNumber and setFilter as user types into forms
   const handleNewPersonEvent = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -103,7 +111,7 @@ const App = () => {
     setShowAll(false) // we only want to see filtered results
   }
 
-  // What the app renders - Components are stored as other js files.
+  // What the app renders - Components are imported as other .js files.
   return (
     <div>
       <h2>React Phonebook</h2>
@@ -119,7 +127,9 @@ const App = () => {
         handleNameEvent={handleNewPersonEvent}
         handleNumberEvent={handleNewPhoneNumberEvent}/>
 
-      <Notification message = {confirmationMessage}/>
+      <Notification
+        message={confirmationMessage}
+        msgType={messageType}/>
 
       <h3>Numbers</h3>
       <ul>
