@@ -10,7 +10,7 @@
       "id": 2,
       "content": "Browser can execute only Javascript",
       "date": "2019-05-30T18:39:34.091Z",
-      "important": true
+      "important": false
     },
     {
       "id": 3,
@@ -33,7 +33,7 @@
     {
       "content": "Syntax is annoying most of the time",
       "date": "2019-10-10T04:16:03.160Z",
-      "important": true,
+      "important": false,
       "id": 6
     },
     {
@@ -47,6 +47,12 @@
       "date": "2019-10-23T00:10:17.802Z",
       "important": true,
       "id": 8
+    },
+    {
+      "content": "In React we have to use the className attribute instead of the class attribute.",
+      "date": "2019-10-24T00:50:39.405Z",
+      "important": false,
+      "id": 9
     }
   ]
 }
