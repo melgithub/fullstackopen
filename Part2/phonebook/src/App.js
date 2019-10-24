@@ -3,6 +3,7 @@ import Filter from './Components/Filter'
 import PersonForm from './Components/PersonForm'
 import Entries from './Components/Entries'
 import personService from './Services/persons' 
+import Notification from './Components/Notification'
 
 const App = () => {
   // States
@@ -11,6 +12,7 @@ const App = () => {
   const [ newPhoneNumber, setNewPhoneNumber ] = useState('')
   const [ showAll, setShowAll] = useState(true) // true by default
   const [ filter, setFilter] = useState('') // contents of our filter
+  const [confirmationMessage, setConfirmationMessage] = useState(null)
 
   // Fetching persons from server
   useEffect(() => {
@@ -61,6 +63,12 @@ const App = () => {
           setPersons(persons.concat(response.data))
         })
     }
+
+    setConfirmationMessage(`Contact ${newName} updated.`)
+    setTimeout(() => {
+      setConfirmationMessage(null)
+    }, 5000);
+
     setNewName('') 
     setNewPhoneNumber('') 
   }
@@ -110,6 +118,8 @@ const App = () => {
         number={newPhoneNumber}
         handleNameEvent={handleNewPersonEvent}
         handleNumberEvent={handleNewPhoneNumberEvent}/>
+
+      <Notification message = {confirmationMessage}/>
 
       <h3>Numbers</h3>
       <ul>
