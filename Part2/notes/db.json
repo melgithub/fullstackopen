@@ -10,7 +10,7 @@
       "id": 2,
       "content": "Browser can execute only Javascript",
       "date": "2019-05-30T18:39:34.091Z",
-      "important": false
+      "important": true
     },
     {
       "id": 3,
@@ -21,13 +21,13 @@
     {
       "content": "CSS is lame",
       "date": "2019-10-10T04:05:19.019Z",
-      "important": true,
+      "important": false,
       "id": 4
     },
     {
       "content": "JS is kinda weird",
       "date": "2019-10-10T04:08:27.928Z",
-      "important": true,
+      "important": false,
       "id": 5
     },
     {
