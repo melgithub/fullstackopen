@@ -21,11 +21,6 @@ let notes = [
       important: true
     }
   ]
-  const app = http.createServer((request, response) => {
-    response.writeHead(200, { 'Content-Type': 'application/json' })
-    response.end(JSON.stringify(notes))
-  })
-
   app.get('/', (req, res) => {
     res.send('<h1>Hello World!</h1>')
   })
@@ -33,7 +28,8 @@ let notes = [
   app.get('/notes', (req, res) => {
     res.json(notes)
   })
-
-const port = 3001
-app.listen(port) // bind the http server assigned to the app variable, listen to HTTP reqs on assigned port
-console.log(`Server running on port ${port}`)
+  
+  const PORT = 3001
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
+  })
