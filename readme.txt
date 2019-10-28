@@ -1,1 +1,1 @@
-This is the mostly example exercises for Full Stack Open.
+Full Stack Open application work.
