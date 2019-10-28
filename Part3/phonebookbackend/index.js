@@ -30,7 +30,12 @@ let persons = [
     ]
 
     app.get('/', (req, res) => {
-        res.send('<h1>3.1: Phonebook backend, Step 1</h1>')
+        res.send('<h1>3.2: Phonebook backend, Step 2</h1>')
+    })
+
+    app.get('/info', (req, res) => {
+        const date = new Date();
+        res.send(`Phonebook contains info for ${persons.length} people.<br><br>${date}`)
     })
 
     app.get('/api/persons', (req, res) => {
