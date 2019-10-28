@@ -1,5 +1,8 @@
-const express = require('express')
-const app = express()
+const express = require('express') // dictates that we need express
+const app = express() // creates an express app
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 let notes = [
     {
@@ -21,14 +24,68 @@ let notes = [
       important: true
     }
   ]
+
+  const generateId = () => {
+    const maxId = notes.length > 0
+      ? Math.max(...notes.map(n => n.id))
+      : 0
+    return maxId + 1
+  }
+
+  // ----- HTTP POST request
+  // Event handler function can access the data from the body property of the request object
+  // Without body-parser, the body property would be undef
+
+  app.post('/notes', (request, response) => {
+    const body = request.body
+  
+    if (!body.content) {
+      return response.status(400).json({ 
+        error: 'content missing' 
+      })
+    }
+  
+    const note = {
+      content: body.content,
+      important: body.important || false,
+      date: new Date(),
+      id: generateId(),
+    }
+  
+    notes = notes.concat(note)
+  
+    response.json(note)
+  })
+
+  // ----- Routes HTTP GET requests to the specified paths with the specified callback functions
   app.get('/', (req, res) => {
-    res.send('<h1>Hello World!</h1>')
+    res.send('<h2>Hello World!</h2>')
   })
   
   app.get('/notes', (req, res) => {
     res.json(notes)
   })
+
+  // Single resource fetch
+  app.get('/notes/:id', (request, response) => {
+    const id = Number(request.params.id) // cast?
+    const note = notes.find(note => note.id === id)
+    if (note) {
+      response.json(note)
+    } else {
+      response.status(404).end()
+    }
+  })
   
+  // Single resource delete
+  app.delete('/notes/:id', (request, response) => {
+    const id = Number(request.params.id)
+    notes = notes.filter(note => note.id !== id)
+    response.status(204).end()
+  })
+
+  // -----
+
   const PORT = 3001
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
