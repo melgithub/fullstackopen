@@ -1,6 +1,7 @@
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 
+// ---- PHONEBOOK DATA
 let persons = [
         {
         name: "Jennifer Honey",
@@ -29,6 +30,7 @@ let persons = [
         }
     ]
 
+    // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
         res.send('<h1>3.2: Phonebook backend, Step 2</h1>')
     })
@@ -42,6 +44,19 @@ let persons = [
         res.json(persons)
     })
 
+    app.get('/api/persons/:id', (req, res) => {
+        const id = Number(req.params.id) // If we don't cast as Number, we get a var mismatch and won't get the person
+        const person = persons.find(person => person.id === id)
+
+        if (person){ // If object is truthy (not null/undef)
+            res.json(person)
+        }
+        else {
+            res.status(404).end()
+        }
+    })
+
+    // ---- SERVER PORT INFO
     const PORT = 3001
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`)
