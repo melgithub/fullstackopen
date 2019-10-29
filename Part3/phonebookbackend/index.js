@@ -35,7 +35,7 @@ let persons = [
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.5: Phonebook backend, Step 5</h1>')
+        res.send('<h1>3.6: Phonebook backend, Step 6</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -51,7 +51,7 @@ let persons = [
         const id = Number(req.params.id) // If we don't cast as Number, we get a var mismatch and won't get the person
         const person = persons.find(person => person.id === id)
 
-        if (person){ // If object is truthy (not null/undef)
+        if (person) { // If object is truthy (not null/undef)
             res.json(person)
         }
         else {
@@ -59,20 +59,23 @@ let persons = [
         }
     })
 
-    const generateID = () => {
-        const maxId = persons.length > 0
-          ? Math.max(...persons.map(n => n.id))
-          : 0
-        return maxId + 1
-      }
-
     // HTTP POST REQUEST
     app.post('/api/persons', (req, res) => {
         const body = req.body
         
-        if (!body.name || !body.number){ // won't work if name or number missing.
+        if (!body.name){ // won't work if name or number missing.
             return res.status(400).json({
-                error: 'Name or number missing!'
+                error: 'Name missing!'
+            })
+        }
+        else if (!body.number){ // won't work if name or number missing.
+            return res.status(400).json({
+                error: 'Number missing!'
+            })
+        }
+        else if (persons.find(p => p.name === body.name)){
+            return res.status(400).json({
+                error: `${body.name} already in phonebook.`
             })
         }
 
@@ -92,6 +95,13 @@ let persons = [
         persons = persons.filter(person => person.id !== id)
         res.status(204).end()
     })
+
+    const generateID = () => {
+        const maxId = persons.length > 0
+          ? Math.max(...persons.map(n => n.id))
+          : 0
+        return maxId + 1
+      }
 
     // ---- SERVER PORT INFO
     const PORT = 3001
