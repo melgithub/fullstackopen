@@ -1,13 +1,13 @@
-const express = require('express') // dictates that we need express
-const app = express() // creates an express app
+const express = require('express') 
+const app = express()
 const bodyParser = require('body-parser')
-const morgan = require('morgan')
+//const morgan = require('morgan')
+const morganBody = require('morgan-body')
 
 // Middleware 
 app.use(bodyParser.json())
-app.use(morgan("tiny"))
+morganBody(app)
 
-//#region PHONEBOOK DATA
 let persons = [
         {
         name: "Jennifer Honey",
@@ -35,11 +35,10 @@ let persons = [
         id: 5
         }
     ]
-    //#endregion
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.7: Phonebook backend, Step 7</h1>')
+        res.send('<h1>3.8: Phonebook backend, Step 8</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -59,7 +58,7 @@ let persons = [
             res.json(person)
         }
         else {
-            app.use(unknownEndpoint)
+            res.status(404).end()
         }
     })
 
@@ -74,12 +73,12 @@ let persons = [
     app.post('/api/persons', (req, res) => {
         const body = req.body
         
-        if (!body.name){ // won't work if name or number missing.
+        if (!body.name){ // won't work if name missing.
             return res.status(400).json({
                 error: 'Name missing!'
             })
         }
-        else if (!body.number){ // won't work if name or number missing.
+        else if (!body.number){ // won't work if number missing.
             return res.status(400).json({
                 error: 'Number missing!'
             })
@@ -95,6 +94,7 @@ let persons = [
             number: body.number,
             id: generateID(),
         }
+
         persons = persons.concat(person)
         res.json(person)
     })
