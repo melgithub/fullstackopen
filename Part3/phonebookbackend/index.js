@@ -32,7 +32,7 @@ let persons = [
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.2: Phonebook backend, Step 2</h1>')
+        res.send('<h1>3.4: Phonebook backend, Step 4</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -54,6 +54,13 @@ let persons = [
         else {
             res.status(404).end()
         }
+    })
+
+    // HTTP DELETE REQUESTS
+    app.delete('/api/persons/:id', (req, res) => {
+        const id = Number(req.params.id)
+        persons = persons.filter(person => person.id !== id)
+        res.status(204).end()
     })
 
     // ---- SERVER PORT INFO
