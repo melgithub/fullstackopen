@@ -1,21 +1,13 @@
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
 // Middleware 
 app.use(bodyParser.json())
+app.use(morgan("tiny"))
 
-const requestLogger = (request, response, next) => {
-    console.log('Method:', request.method)
-    console.log('Path:  ', request.path)
-    console.log('Body:  ', request.body)
-    console.log('---')
-    next()
-  }
-
-app.use(requestLogger)
-
-// ---- PHONEBOOK DATA
+//#region PHONEBOOK DATA
 let persons = [
         {
         name: "Jennifer Honey",
@@ -43,10 +35,11 @@ let persons = [
         id: 5
         }
     ]
+    //#endregion
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.6: Phonebook backend, Step 6</h1>')
+        res.send('<h1>3.7: Phonebook backend, Step 7</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -70,8 +63,7 @@ let persons = [
         }
     })
 
-    // HTTP POST REQUEST
-    
+    // ---- HTTP POST REQUEST
     const generateID = () => {
         const maxId = persons.length > 0
           ? Math.max(...persons.map(n => n.id))
@@ -103,25 +95,16 @@ let persons = [
             number: body.number,
             id: generateID(),
         }
-
         persons = persons.concat(person)
         res.json(person)
     })
 
-    // HTTP DELETE REQUESTS
+    // ---- HTTP DELETE REQUESTS
     app.delete('/api/persons/:id', (req, res) => {
         const id = Number(req.params.id)
         persons = persons.filter(person => person.id !== id)
         res.status(204).end()
     })
-
-    // Middleware
-    const unknownEndpoint = (request, response) => {
-        response.status(404).send({ error: 'unknown endpoint' })
-    }
-
-    app.use(unknownEndpoint)
-
 
     // ---- SERVER PORT INFO
     const PORT = 3001
