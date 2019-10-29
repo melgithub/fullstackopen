@@ -1,38 +1,41 @@
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
+const bodyParser = require('body-parser')
+
+app.use(bodyParser.json())
 
 // ---- PHONEBOOK DATA
 let persons = [
         {
         name: "Jennifer Honey",
         number: "555-3332",
-        id: 6
+        id: 1
         },
         {
         name: "Agatha Trunchbull",
         number: "911-888-2222",
-        id: 7
+        id: 2
         },
         {
         name: "Bruce Bogtrotter",
         number: "434-9232",
-        id: 8
+        id: 3
         },
         {
         name: "Matilda Wormwood",
         number: "543-6554",
-        id: 9
+        id: 4
         },
         {
         name: "Amanda Thripp",
         number: "390-431-222",
-        id: 10
+        id: 5
         }
     ]
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.4: Phonebook backend, Step 4</h1>')
+        res.send('<h1>3.5: Phonebook backend, Step 5</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -54,6 +57,33 @@ let persons = [
         else {
             res.status(404).end()
         }
+    })
+
+    const generateID = () => {
+        const maxId = persons.length > 0
+          ? Math.max(...persons.map(n => n.id))
+          : 0
+        return maxId + 1
+      }
+
+    // HTTP POST REQUEST
+    app.post('/api/persons', (req, res) => {
+        const body = req.body
+        
+        if (!body.name || !body.number){ // won't work if name or number missing.
+            return res.status(400).json({
+                error: 'Name or number missing!'
+            })
+        }
+
+        const person = { // constructor
+            name: body.name,
+            number: body.number,
+            id: generateID(),
+        }
+
+        persons = persons.concat(person)
+        res.json(person)
     })
 
     // HTTP DELETE REQUESTS
