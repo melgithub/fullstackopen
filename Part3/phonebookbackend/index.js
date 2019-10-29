@@ -2,7 +2,18 @@ const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 const bodyParser = require('body-parser')
 
+// Middleware 
 app.use(bodyParser.json())
+
+const requestLogger = (request, response, next) => {
+    console.log('Method:', request.method)
+    console.log('Path:  ', request.path)
+    console.log('Body:  ', request.body)
+    console.log('---')
+    next()
+  }
+
+app.use(requestLogger)
 
 // ---- PHONEBOOK DATA
 let persons = [
@@ -55,11 +66,19 @@ let persons = [
             res.json(person)
         }
         else {
-            res.status(404).end()
+            app.use(unknownEndpoint)
         }
     })
 
     // HTTP POST REQUEST
+    
+    const generateID = () => {
+        const maxId = persons.length > 0
+          ? Math.max(...persons.map(n => n.id))
+          : 0
+        return maxId + 1
+      }
+      
     app.post('/api/persons', (req, res) => {
         const body = req.body
         
@@ -96,12 +115,13 @@ let persons = [
         res.status(204).end()
     })
 
-    const generateID = () => {
-        const maxId = persons.length > 0
-          ? Math.max(...persons.map(n => n.id))
-          : 0
-        return maxId + 1
-      }
+    // Middleware
+    const unknownEndpoint = (request, response) => {
+        response.status(404).send({ error: 'unknown endpoint' })
+    }
+
+    app.use(unknownEndpoint)
+
 
     // ---- SERVER PORT INFO
     const PORT = 3001
