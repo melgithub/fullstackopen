@@ -4,15 +4,12 @@ import App from './App'
 import axios from 'axios'
 import './index.css'
 
-axios
-  .get('http://localhost:3001/notes')
-  .then(response => {
-    const notes = response.data
-    ReactDOM.render(
-        <App notes={notes} />,
-        document.getElementById('root')
-      )
-  })
+const baseURL = '/notes'
+
+const getAll = () => {
+  const request = axios.get(baseURL)
+  return request.then(response => response.data)
+}
 
 ReactDOM.render(
     <App />, document.getElementById('root')
