@@ -1,8 +1,9 @@
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 const bodyParser = require('body-parser')
-const cors = require('cors')
+const cors = require('cors') // middleware to allow requests from other origins
 
+app.use(express.static('build')) //middleware to serve static files such as images, CSS files, and JS files
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -38,7 +39,7 @@ let notes = [
   // Event handler function can access the data from the body property of the request object
   // Without body-parser, the body property would be undef
 
-  app.post('/notes', (request, response) => {
+  app.post('/api/notes', (request, response) => {
     const body = request.body
   
     if (!body.content) {
@@ -60,16 +61,16 @@ let notes = [
   })
 
   // ----- Routes HTTP GET requests to the specified paths with the specified callback functions
-  app.get('/', (req, res) => {
-    res.send('<h2>Hello World!</h2>')
-  })
+  // app.get('/', (req, res) => {
+  //   res.send('<h2>Hello World!</h2>')
+  // })
   
-  app.get('/notes', (req, res) => {
+  app.get('/api/notes', (req, res) => {
     res.json(notes)
   })
 
   // Single resource fetch
-  app.get('/notes/:id', (request, response) => {
+  app.get('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id) // cast?
     const note = notes.find(note => note.id === id)
     if (note) {
@@ -80,7 +81,7 @@ let notes = [
   })
   
   // Single resource delete
-  app.delete('/notes/:id', (request, response) => {
+  app.delete('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id)
     notes = notes.filter(note => note.id !== id)
     response.status(204).end()
