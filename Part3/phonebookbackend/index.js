@@ -3,8 +3,10 @@ const app = express()
 const bodyParser = require('body-parser')
 //const morgan = require('morgan')
 const morganBody = require('morgan-body')
+const cors = require('cors')
 
-// Middleware 
+// Middleware
+app.use(cors()) 
 app.use(bodyParser.json())
 morganBody(app)
 
