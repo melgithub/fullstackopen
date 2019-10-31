@@ -40,7 +40,7 @@ let persons = [
 
     // ---- HTTP GET REQUESTS
     app.get('/', (req, res) => {
-        res.send('<h1>3.8: Phonebook backend, Step 8</h1>')
+        res.send('<h1>3.10: Phonebook backend, Step 10</h1>')
     })
 
     app.get('/info', (req, res) => {
@@ -109,7 +109,7 @@ let persons = [
     })
 
     // ---- SERVER PORT INFO
-    const PORT = 3001
+    const PORT = process.env.PORT || 3001
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`)
     })

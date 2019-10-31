@@ -1,2 +1,2 @@
-@id = 5
-DELETE http://localhost:3001/api/persons/{{id}}
+@id = 6
+DELETE https://nameless-mountain-95639.herokuapp.com/api/persons/{{id}}

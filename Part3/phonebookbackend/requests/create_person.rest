@@ -1,7 +1,7 @@
-POST http://localhost:3001/api/persons
+POST https://nameless-mountain-95639.herokuapp.com/api/persons
 Content-Type: application/json
 
 {
-    "name": "Melissa Koven",
-    "number": "564-6997"
+    "name": "Amanda Thripp",
+    "number": "450-2112"
 }
