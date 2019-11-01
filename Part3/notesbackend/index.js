@@ -41,10 +41,9 @@ let notes = [
 
   app.post('/api/notes', (request, response) => {
     const body = request.body
-  
     if (!body.content) {
       return response.status(400).json({ 
-        error: 'content missing' 
+        error: 'content missing'
       })
     }
   
