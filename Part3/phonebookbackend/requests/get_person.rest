@@ -1,2 +1,2 @@
-@id = 1
+@id = 5dbf5533cd8b9632a0c05b2c
 GET http://localhost:3001/api/persons/{{id}}
