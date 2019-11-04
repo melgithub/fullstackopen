@@ -89,13 +89,6 @@ let persons = [
     })
 
     // ---- HTTP DELETE REQUESTS
-    // Not yet functional with database
-    // app.delete('/api/persons/:id', (req, res) => {
-    //     const id = Number(req.params.id)
-    //     persons = persons.filter(person => person.id !== id)
-    //     res.status(204).end()
-    // })
-
     app.delete('/api/persons/:id', (req, res, next) => {
         Person.findByIdAndRemove(req.params.id)
         .then(result => {
@@ -104,7 +97,6 @@ let persons = [
         .catch(error => next(error))
     })
 
-    
     // Error handling middleware ---
     const unknownEndpoint = (request, response) => {
         response.status(404).send({ error: 'Unknown endpoint' })
