@@ -1,2 +1,2 @@
-@id = 5dbf7c00466f1643104192cb
+@id = 5dbfb22b4c161147f0405b5d
 DELETE http://localhost:3001/api/persons/{{id}}
