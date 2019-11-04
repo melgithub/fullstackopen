@@ -1,0 +1,9 @@
+
+@id = 5dc0b026843c6109d476c317
+PUT http://localhost:3001/api/persons/{{id}}
+Content-Type: application/json
+
+{
+    "name": "Michelangelo",
+    "number": "800-73302"
+}
