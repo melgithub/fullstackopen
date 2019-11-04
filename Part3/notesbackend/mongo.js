@@ -1,42 +1,44 @@
-const mongoose = require('mongoose')
+//// This file was purely to get familiar with database operations
 
-if ( process.argv.length<3 ) {
-  console.log('give password as argument')
-  process.exit(1)
-}
+// const mongoose = require('mongoose')
 
-const password = process.argv[2]
+// if ( process.argv.length<3 ) {
+//   console.log('give password as argument')
+//   process.exit(1)
+// }
 
-const url =
-  `mongodb+srv://fullstack:${password}@cluster0-ukl7e.mongodb.net/note-app?retryWrites=true&w=majority`
+// const password = process.argv[2]
 
-mongoose.connect(url, { useNewUrlParser: true })
+// const url =
+//   `mongodb+srv://fullstack:${password}@cluster0-ukl7e.mongodb.net/note-app?retryWrites=true&w=majority`
 
-const noteSchema = new mongoose.Schema({
-  content: String,
-  date: Date,
-  important: Boolean,
-})
+// mongoose.connect(url, { useNewUrlParser: true })
 
-const Note = mongoose.model('Note', noteSchema)
-
-const note = new Note({
-  content: 'HTML is Easy',
-  date: new Date(),
-  important: true,
-})
-
-//// Saves a new note to the db
-// note.save().then(response => {
-//   console.log('note saved!')
-//   mongoose.connection.close()
+// const noteSchema = new mongoose.Schema({
+//   content: String,
+//   date: Date,
+//   important: Boolean,
 // })
 
-// When executed, program prints all notes stored in the db
-// We could also restrict the search to only include important notes, etc.
-Note.find({}).then(result => {
-    result.forEach(note => {
-      console.log(note)
-    })
-    mongoose.connection.close()
-  })
+// const Note = mongoose.model('Note', noteSchema)
+
+// const note = new Note({
+//   content: 'HTML is Easy',
+//   date: new Date(),
+//   important: true,
+// })
+
+// //// Saves a new note to the db
+// // note.save().then(response => {
+// //   console.log('note saved!')
+// //   mongoose.connection.close()
+// // })
+
+// // When executed, program prints all notes stored in the db
+// // We could also restrict the search to only include important notes, etc.
+// Note.find({}).then(result => {
+//     result.forEach(note => {
+//       console.log(note)
+//     })
+//     mongoose.connection.close()
+//   })

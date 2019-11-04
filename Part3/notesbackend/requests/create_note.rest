@@ -2,6 +2,6 @@ post http://localhost:3001/api/notes
 Content-Type: application/json
 
 {
-    "content": "VS Code REST Client is handy!",
+    "content": "MongoDB is kinda cool and stuff.",
     "important": true
 }

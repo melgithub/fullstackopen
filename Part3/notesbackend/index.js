@@ -1,7 +1,9 @@
+require('dotenv').config() // sets up our database env variable
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 const bodyParser = require('body-parser')
 const cors = require('cors') // middleware to allow requests from other origins
+const Note = require('./models/note')
 
 app.use(express.static('build')) //middleware to serve static files such as images, CSS files, and JS files
 app.use(cors())
@@ -39,46 +41,67 @@ let notes = [
   // Event handler function can access the data from the body property of the request object
   // Without body-parser, the body property would be undef
 
+  // app.post('/api/notes', (request, response) => {
+  //   const body = request.body
+  //   if (!body.content) {
+  //     return response.status(400).json({ 
+  //       error: 'content missing'
+  //     })
+  //   }
+  
+  //   const note = {
+  //     content: body.content,
+  //     important: body.important || false,
+  //     date: new Date(),
+  //     id: generateId(),
+  //   }
+  
+  //   notes = notes.concat(note)
+  
+  //   response.json(note)
+  // })
+
   app.post('/api/notes', (request, response) => {
     const body = request.body
-    if (!body.content) {
-      return response.status(400).json({ 
-        error: 'content missing'
-      })
+  
+    if (body.content === undefined) {
+      return response.status(400).json({ error: 'content missing' })
     }
   
-    const note = {
+    const note = new Note({
       content: body.content,
       important: body.important || false,
       date: new Date(),
-      id: generateId(),
-    }
+    })
   
-    notes = notes.concat(note)
-  
-    response.json(note)
+    note.save().then(savedNote => {
+      response.json(savedNote.toJSON())
+    })
   })
+  
 
   // ----- Routes HTTP GET requests to the specified paths with the specified callback functions
   // app.get('/', (req, res) => {
   //   res.send('<h2>Hello World!</h2>')
   // })
   
-  app.get('/api/notes', (req, res) => {
-    res.json(notes)
+  // app.get('/api/notes', (req, res) => {
+  //   res.json(notes)
+  // })
+
+  app.get('/api/notes', (request, response) => {
+    Note.find({}).then(notes => {
+      response.json(notes.map(note=>note.toJSON())) // result is a new array where every item is mapped to new obj w/ toJSON method
+    })
   })
 
   // Single resource fetch
   app.get('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id) // cast?
-    const note = notes.find(note => note.id === id)
-    if (note) {
-      response.json(note)
-    } else {
-      response.status(404).end()
-    }
+    Note.findById(request.params.id).then(note => {
+      response.json(note.toJSON())
+    })
   })
-  
+
   // Single resource delete
   app.delete('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id)
@@ -88,7 +111,7 @@ let notes = [
 
   // -----
 
-  const PORT = process.env.PORT || 3001 // using port defined in env variable port or port 3001 if its undef.
+  const PORT = process.env.PORT
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
   })
