@@ -1,2 +1,2 @@
 @id = 1
-GET https://nameless-mountain-95639.herokuapp.com/api/persons/{{id}}
+GET http://localhost:3001/api/persons/{{id}}

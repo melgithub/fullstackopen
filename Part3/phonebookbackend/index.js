@@ -1,9 +1,10 @@
+require('dotenv').config()
 const express = require('express') 
 const app = express()
 const bodyParser = require('body-parser')
-//const morgan = require('morgan')
 const morganBody = require('morgan-body')
 const cors = require('cors')
+const Person = require('./models/person')
 
 // Middleware
 app.use(cors()) 
@@ -40,17 +41,23 @@ let persons = [
     ]
 
     // ---- HTTP GET REQUESTS
-    app.get('/', (req, res) => {
-        res.send('<h1>3.10: Phonebook backend, Step 10</h1>')
-    })
+    // app.get('/', (req, res) => {
+    //     res.send('<h1>3.10: Phonebook backend, Step 10</h1>')
+    // })
 
     app.get('/info', (req, res) => {
         const date = new Date();
         res.send(`Phonebook contains info for ${persons.length} people.<br><br>${date}`)
     })
 
+    // app.get('/api/persons', (req, res) => {
+    //     res.json(persons)
+    // })
+
     app.get('/api/persons', (req, res) => {
-        res.json(persons)
+        Person.find({}).then(persons => {
+            res.json(persons.map(p=>p.toJSON()))
+        })
     })
 
     app.get('/api/persons/:id', (req, res) => {
@@ -110,7 +117,7 @@ let persons = [
     })
 
     // ---- SERVER PORT INFO
-    const PORT = process.env.PORT || 3001
+    const PORT = process.env.PORT
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`)
     })
