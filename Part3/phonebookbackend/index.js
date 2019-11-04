@@ -51,7 +51,7 @@ let persons = [
             res.json(persons.map(p=>p.toJSON()))
         })
     })
-
+    // -- Getting individual person
     app.get('/api/persons/:id', (req, res, next) => {
         Person.findById(req.params.id).then(person => {
             if (person) {
@@ -66,7 +66,6 @@ let persons = [
     // ---- HTTP POST REQUEST
     app.post('/api/persons', (req, res) => {
         const body = req.body
-        
         if (!body.name){ // won't work if name missing.
             return res.status(400).json({
                 error: 'Name missing!'
@@ -77,12 +76,10 @@ let persons = [
                 error: 'Number missing!'
             })
         }
-
         const person = new Person ({ // constructor
             name: body.name,
             number: body.number,
         })
-
         person.save().then(savedPerson => {
             res.json(savedPerson.toJSON())
         })
