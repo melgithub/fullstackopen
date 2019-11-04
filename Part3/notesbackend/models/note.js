@@ -1,11 +1,12 @@
 // This module connects to our DB and exports Note based on the schema
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 
 const url = process.env.MONGODB_URI
 
 console.log('connecting to', url)
 
-mongoose.connect(url, { useNewUrlParser: true })
+mongoose.connect(url, { useNewUrlParser: true, useFindAndModify: false})
   .then(result => {
     console.log('Connected to MongoDB')
   })

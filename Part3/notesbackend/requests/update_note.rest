@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/notes/5dbfa6f869a9184dc8925c21
+Content-Type: application/json
+
+{
+    "content": "We can even make our own middleware to help us with our apps!",
+    "important": true
+}

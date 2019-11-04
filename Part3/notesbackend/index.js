@@ -52,12 +52,30 @@ app.use(express.static('build')) //middleware to serve static files such as imag
       })
       .catch(error => next(error))
   })
+  
+  // Update note importance (change a resource)
+  app.put('/api/notes/:id', (request, response, next) => {
+    const body = request.body
+  
+    const note = {
+      content: body.content,
+      important: body.important,
+    }
+  
+    Note.findByIdAndUpdate(request.params.id, note, { new: true })
+      .then(updatedNote => {
+        response.json(updatedNote.toJSON())
+      })
+      .catch(error => next(error))
+  })
 
   // Single resource delete
-  app.delete('/api/notes/:id', (request, response) => {
-    const id = Number(request.params.id)
-    notes = notes.filter(note => note.id !== id)
-    response.status(204).end()
+  app.delete('/api/notes/:id', (request, response, next) => {
+    Note.findByIdAndRemove(request.params.id)
+      .then(result => {
+        response.status(204).end()
+      })
+      .catch(error => next(error))
   })
 
   // Error handling ---
