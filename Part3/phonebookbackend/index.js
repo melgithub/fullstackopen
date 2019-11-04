@@ -86,7 +86,7 @@ let persons = [
         if (!body.name){ // won't work if name missing.
             return res.status(400).json({
                 error: 'Name missing!'
-            })
+            })  
         }
         else if (!body.number){ // won't work if number missing.
             return res.status(400).json({
