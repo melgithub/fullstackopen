@@ -41,26 +41,6 @@ let notes = [
   // Event handler function can access the data from the body property of the request object
   // Without body-parser, the body property would be undef
 
-  // app.post('/api/notes', (request, response) => {
-  //   const body = request.body
-  //   if (!body.content) {
-  //     return response.status(400).json({ 
-  //       error: 'content missing'
-  //     })
-  //   }
-  
-  //   const note = {
-  //     content: body.content,
-  //     important: body.important || false,
-  //     date: new Date(),
-  //     id: generateId(),
-  //   }
-  
-  //   notes = notes.concat(note)
-  
-  //   response.json(note)
-  // })
-
   app.post('/api/notes', (request, response) => {
     const body = request.body
   
@@ -84,10 +64,6 @@ let notes = [
   // app.get('/', (req, res) => {
   //   res.send('<h2>Hello World!</h2>')
   // })
-  
-  // app.get('/api/notes', (req, res) => {
-  //   res.json(notes)
-  // })
 
   app.get('/api/notes', (request, response) => {
     Note.find({}).then(notes => {
@@ -97,9 +73,18 @@ let notes = [
 
   // Single resource fetch
   app.get('/api/notes/:id', (request, response) => {
-    Note.findById(request.params.id).then(note => {
-      response.json(note.toJSON())
-    })
+    Note.findById(request.params.id)
+      .then(note => {
+        if (note) {
+          response.json(note.toJSON())
+        } else {
+          response.status(404).end() 
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        response.status(400).send({ error: 'Incorrectly formatted ID' })
+      })
   })
 
   // Single resource delete
