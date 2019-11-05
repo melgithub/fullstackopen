@@ -48,6 +48,11 @@ const App = () => {
         .update(person.id, changedPerson) // Updating backend
         .then(response => {  // Rendering to page
           setPersons(persons.filter(person => person.name !== newName).concat(response.data))
+          setMessageType('success')
+          setConfirmationMessage(`Contact ${newName} updated.`)
+          setTimeout(() => {
+          setConfirmationMessage(null)
+          }, 5000);
         })
         .catch(error => {
           setMessageType('error')
@@ -66,7 +71,7 @@ const App = () => {
         .then(response => {
           setPersons(persons.concat(response.data))
           setMessageType('success')
-          setConfirmationMessage(`Contact ${newName} updated.`)
+          setConfirmationMessage(`Contact ${newName} added.`)
           setTimeout(() => {
           setConfirmationMessage(null)
           }, 5000);

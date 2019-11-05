@@ -1,4 +1,6 @@
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production'){
+    require('dotenv').config()
+}
 const express = require('express') 
 const app = express()
 const bodyParser = require('body-parser')
@@ -44,8 +46,10 @@ app.post('/api/persons', (req, res, next) => {
         number: body.number,
     })
     
-    person.save().then(savedPerson => {
-        res.json(savedPerson.toJSON())
+    person.save()
+    .then(savedPerson => savedPerson.toJSON())
+    .then(savedAndFormattedPerson => {
+        res.json(savedAndFormattedPerson)
     })
     .catch(error => next(error))
 })
@@ -59,8 +63,9 @@ app.put('/api/persons/:id', (request, response, next) => {
     }
 
     Person.findByIdAndUpdate(request.params.id, person, { new: true })
-    .then(updatedPerson => {
-        response.json(updatedPerson.toJSON())
+    .then(updatedPerson => updatedPerson.toJSON())
+    .then(updatedAndFormattedPerson => {
+        response.json(updatedAndFormattedPerson)
     })
     .catch(error => next(error))
 })
