@@ -14,7 +14,7 @@ app.use(express.static('build')) //middleware to serve static files such as imag
 // Without body-parser, the body property would be undef
 
 // Post a new note resource
-  app.post('/api/notes', (request, response) => {
+  app.post('/api/notes', (request, response, next) => {
     const body = request.body
   
     if (!body.content) {
@@ -30,6 +30,7 @@ app.use(express.static('build')) //middleware to serve static files such as imag
     note.save().then(savedNote => {
       response.json(savedNote.toJSON())
     })
+    .catch(error => next(error))
   })
 
   // ----- Routes HTTP GET requests to the specified paths with the specified callback functions
@@ -91,6 +92,9 @@ app.use(express.static('build')) //middleware to serve static files such as imag
     if (error.name === 'CastError' && error.kind === 'ObjectId') {
       return response.status(400).send({ error: 'Malformatted id' })
     } 
+    else if (error.name === 'ValidationError') {
+      return response.status(400).json({ error: error.message })
+    }
     next(error)
   }
   app.use(errorHandler)
