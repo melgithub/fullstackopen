@@ -65,14 +65,18 @@ const App = () => {
         .create(personObject)
         .then(response => {
           setPersons(persons.concat(response.data))
+          setMessageType('success')
+          setConfirmationMessage(`Contact ${newName} updated.`)
+          setTimeout(() => {
+          setConfirmationMessage(null)
+          }, 5000);
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          setMessageType('error')
+          setConfirmationMessage('Entry not valid.')
         })
     }
-    setMessageType('success')
-    setConfirmationMessage(`Contact ${newName} updated.`)
-    setTimeout(() => {
-      setConfirmationMessage(null)
-    }, 5000);
-
     setNewName('') 
     setNewPhoneNumber('') 
   }
