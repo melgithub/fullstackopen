@@ -1,4 +1,6 @@
-require('dotenv').config() // sets up our database env variable
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 const express = require('express') // dictates that we need express
 const app = express() // creates an express app
 const bodyParser = require('body-parser')
@@ -27,10 +29,12 @@ app.use(express.static('build')) //middleware to serve static files such as imag
       date: new Date(),
     })
   
-    note.save().then(savedNote => {
-      response.json(savedNote.toJSON())
-    })
-    .catch(error => next(error))
+    note.save() // promise chaining
+        .then(savedNote => savedNote.toJSON())
+        .then(savedAndFormattedNote => {
+          response.json(savedAndFormattedNote)
+        }) 
+        .catch(error => next(error))
   })
 
   // ----- Routes HTTP GET requests to the specified paths with the specified callback functions

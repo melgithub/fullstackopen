@@ -4,14 +4,14 @@ mongoose.set('useFindAndModify', false)
 
 const url = process.env.MONGODB_URI
 
-console.log('connecting to', url)
+console.log('Connecting to', url)
 
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true})
+mongoose.connect(url, { useNewUrlParser: true })
   .then(result => {
-    console.log('Connected to MongoDB')
+    console.log('connected to MongoDB')
   })
   .catch((error) => {
-    console.log('Error connecting to MongoDB:', error.message)
+    console.log('error connection to MongoDB:', error.message)
   })
 
 const noteSchema = new mongoose.Schema({
