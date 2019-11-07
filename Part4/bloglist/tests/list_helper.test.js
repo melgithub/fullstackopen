@@ -1,7 +1,13 @@
-const totalLikes = require('../utils/list_helper').totalLikes
+const listHelper = require('../utils/list_helper')
+
+test('dummy returns one', () => {
+  const blogs = [] // parameter
+
+  const result = listHelper.dummy(blogs)
+  expect(result).toBe(1)
+})
 
 describe('total likes', () => {
-
   const blogsSample = [
     {
       _id: '5a422a851b54a676234d17f7',
@@ -53,7 +59,7 @@ describe('total likes', () => {
     }
   ]
   test('When I feed the sample list', () => {
-    const result = totalLikes(blogsSample)
+    const result = listHelper.totalLikes(blogsSample)
     expect(result).toBe(40)
   })
 })
