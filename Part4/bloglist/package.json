@@ -10,13 +10,14 @@
     "mongoose": "^5.7.8"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --verbose",
     "start": "node index.js",
     "watch": "nodemon index.js",
     "lint": "eslint ."
   },
   "devDependencies": {
     "eslint": "^6.6.0",
+    "jest": "^24.9.0",
     "nodemon": "^1.19.4"
   },
   "author": "Melissa K",
