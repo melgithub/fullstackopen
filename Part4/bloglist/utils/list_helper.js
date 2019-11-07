@@ -1,4 +1,7 @@
-const dummy = (blogs) => {
+// When npm test is called, this file takes the passed
+// parameter and puts them through a set of logic
+
+const dummy = () => {
   return 1
 }
 
@@ -10,7 +13,13 @@ const totalLikes = (blogs) => {
   return blogLikes.reduce(reducer, 0)
 }
 
+const favoriteBlog = (blogs) => {
+  const blogLikes = blogs.map(b => b.likes)
+  return Math.max(...blogLikes)
+}
+
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favoriteBlog
 }
