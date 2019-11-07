@@ -7,7 +7,6 @@ const listHelper = require('../utils/list_helper')
 
 test('dummy returns one', () => {
   const blogs = [] // parameter
-
   const result = listHelper.dummy(blogs)
   expect(result).toBe(1)
 })
@@ -22,9 +21,17 @@ describe('total likes', () => {
 describe('highest likes', () => {
   test('Highest likes in sample list', () => {
     const result = listHelper.favoriteBlog(blogsSample)
-    expect(result).toBe(12)
+    expect(result).toEqual(mostLikedSample)
   })
 })
+
+// Test info
+const mostLikedSample =
+{
+  title: 'Canonical string reduction',
+  author: 'Edsger W. Dijkstra',
+  likes: 12,
+}
 
 const blogsSample = [
   {
