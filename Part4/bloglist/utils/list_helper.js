@@ -1,7 +1,16 @@
+var _ = require('lodash')
 // When npm test is called, this file takes the passed
 // parameter and puts them through a set of logic
 
 const dummy = () => 1
+
+const mostBlogs = (blogs) => {
+  const authorCount = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // Make new obj with author (property) and count (occurences) as KVPs
+    author: author, // Then maps our new object into a desired format
+    blogs: blogs
+  }))
+  return _.maxBy(authorCount, 'blogs') // Returns the object with the max. count for 'blogs'
+}
 
 const totalLikes = (blogs) => blogs
   .reduce((total, item) => total + item.likes, 0) // Reduce by summing up all likes in array items with initial value set at 0
@@ -17,5 +26,6 @@ const favoriteBlog = (blogs) => blogs
 module.exports = {
   dummy,
   totalLikes,
-  favoriteBlog
+  favoriteBlog,
+  mostBlogs
 }
