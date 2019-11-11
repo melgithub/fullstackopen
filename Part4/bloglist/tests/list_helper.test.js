@@ -25,7 +25,20 @@ describe('highest likes', () => {
   })
 })
 
+describe('most blogs', () => {
+  test('Author and amount', () => {
+    const result = listHelper.mostBlogs(blogsSample)
+    expect(result).toEqual(mostBlogInfo)
+  })
+})
+
 // Test info
+const mostBlogInfo =
+{
+  author: 'Robert C. Martin',
+  blogs: 3
+}
+
 const mostLikedSample =
 {
   title: 'Canonical string reduction',
