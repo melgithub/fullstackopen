@@ -5,11 +5,19 @@ var _ = require('lodash')
 const dummy = () => 1
 
 const mostBlogs = (blogs) => {
+<<<<<<< HEAD
   const authorCount = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // First, make new obj with author (property) and count (occurences) as KVPs
     author: author, // Second, maps our new object into a desired format
     blogs: blogs
   }))
   return _.maxBy(authorCount, 'blogs') // Last, returns the object with the max. count for 'blogs'
+=======
+  const authorCount = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // Make new obj with author (property) and count (occurences) as KVPs
+    author: author, // Then maps our new object into a desired format
+    blogs: blogs
+  }))
+  return _.maxBy(authorCount, 'blogs') // Returns the object with the max. count for 'blogs'
+>>>>>>> 16e77e6fac6a3a25df93146c55786e4954d6d173
 }
 
 const totalLikes = (blogs) => blogs
