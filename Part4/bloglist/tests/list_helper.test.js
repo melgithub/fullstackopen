@@ -25,10 +25,14 @@ describe('highest likes', () => {
   })
 })
 
-describe('most blogs', () => {
-  test('Author and amount', () => {
+describe('Author with most...', () => {
+  test('Most blogs', () => {
     const result = listHelper.mostBlogs(blogsSample)
     expect(result).toEqual(mostBlogInfo)
+  })
+  test('Most likes', () => {
+    const result = listHelper.mostLikes(blogsSample)
+    expect(result).toEqual(mostLikesInfo)
   })
 })
 
@@ -37,6 +41,12 @@ const mostBlogInfo =
 {
   author: 'Robert C. Martin',
   blogs: 3
+}
+
+const mostLikesInfo =
+{
+  author: 'Edsger W. Dijkstra',
+  likes: 17 
 }
 
 const mostLikedSample =

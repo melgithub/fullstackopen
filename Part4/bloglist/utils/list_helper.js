@@ -5,19 +5,24 @@ var _ = require('lodash')
 const dummy = () => 1
 
 const mostBlogs = (blogs) => {
-<<<<<<< HEAD
-  const authorCount = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // First, make new obj with author (property) and count (occurences) as KVPs
+  const authorAndBlogs = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // First, make new obj with author (property) and count (occurences) as KVPs
     author: author, // Second, maps our new object into a desired format
     blogs: blogs
   }))
-  return _.maxBy(authorCount, 'blogs') // Last, returns the object with the max. count for 'blogs'
-=======
-  const authorCount = _.map(_.countBy(blogs, 'author'), (blogs, author) => ({ // Make new obj with author (property) and count (occurences) as KVPs
-    author: author, // Then maps our new object into a desired format
-    blogs: blogs
-  }))
-  return _.maxBy(authorCount, 'blogs') // Returns the object with the max. count for 'blogs'
->>>>>>> 16e77e6fac6a3a25df93146c55786e4954d6d173
+  return _.maxBy(authorAndBlogs, 'blogs') // Last, returns the object with the max. count for 'blogs'
+}
+
+const mostLikes = (blogs) => {
+  const authorLikeCount =_(blogs) // wrapped lodash obj
+    .groupBy('author') // Groups the entries by author
+    .map((likeObjs, author) => ({ // Maps the author along with summed up like info
+      author: author,
+      likes: _.sumBy(likeObjs, 'likes')
+    }))
+    .value()
+  const mostLikes = Math.max.apply(Math, authorLikeCount.map(author => author.likes)) // Return highest like number in the array
+  const authorWithMostLikes = authorLikeCount.find(author => author.likes === mostLikes) // Find the author whose likes is equal to mostlikes
+  return authorWithMostLikes
 }
 
 const totalLikes = (blogs) => blogs
@@ -35,5 +40,6 @@ module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }
