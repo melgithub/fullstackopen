@@ -6,22 +6,25 @@ const cors = require('cors') // middleware to allow requests from other origins
 const notesRouter = require('./controllers/notes')
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
+const logger = require('./utils/logger')
+
 mongoose.set('useFindAndModify', false)
 
 // DB connection
-console.log('Connecting to', config.MONGODB_URI)
+logger.info('Connecting to', config.MONGODB_URI)
 mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
   .then(() => {
-    console.log('connected to MongoDB')
+    logger.info('Connected to MongoDB')
   })
   .catch((error) => {
-    console.log('error connection to MongoDB:', error.message)
+    logger.error('Error connection to MongoDB:', error.message)
   })
 
 // Calling middleware into use
 app.use(cors())
 app.use(express.static('build')) //middleware to serve static files such as images, CSS files, and JS files
 app.use(bodyParser.json())
+app.use(middleware.requestLogger)
 app.use('/api/notes', notesRouter)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
