@@ -2,28 +2,49 @@ const mongoose = require('mongoose')
 const supertest = require('supertest')
 const app = require('../app')
 const api = supertest(app)
+const Note = require('../models/note')
 
-test('notes are returned as json', async () => {
-  await api
-    .get('/api/notes')
-    .expect(200)
-    .expect('Content-Type', /application\/json/)
+const initialNotes = [
+  {
+    content: 'HTML is easy',
+    date: new Date(),
+    important: false,
+  },
+  {
+    content: 'Browser can execute only Javascript',
+    date: new Date(),
+    important: true,
+  },
+]
+
+// Clearing and resetting the db when we start testing to ensure its in same state for every test
+beforeEach(async () => {
+  await Note.deleteMany({})
+
+  let noteObject = new Note(initialNotes[0])
+  await noteObject.save()
+
+  noteObject = new Note(initialNotes[1])
+  await noteObject.save()
 })
 
-test('there are four notes', async () => {
-  const response = await api.get('/api/notes')
-  expect(response.body.length).toBe(2)
+describe('notes', () => {
+  test('notes are returned as json', async () => {
+    await api
+      .get('/api/notes')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  })
+
+  test('a specific note is within the returned notes', async () => {
+    const response = await api.get('/api/notes')
+    const contents = response.body.map(r => r.content) // makes array with content of every note returned by API
+    expect(contents).toContain( // checks the note given to it as a parameter in the list is in the API returned notes
+      'Browser can execute only Javascript'
+    )
+  })
 })
 
-test('the first note is about HTML', async () => {
-  const response = await api.get('/api/notes')
-  expect(response.body[0].content).toBe('HTML is easy')
-})
-
-test('the second note is about JS', async () => {
-  const response = await api.get('/api/notes')
-  expect(response.body[1].content).toBe('Browser can execute only Javascript')
-})
 
 afterAll(() => {
   mongoose.connection.close()
