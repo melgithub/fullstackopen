@@ -8,20 +8,19 @@ const helper = require('./test_helper')
 beforeEach(async () => {
   await Note.deleteMany({})
 
-  let noteObject = new Note(helper.initialNotes[0])
-  await noteObject.save()
-
-  noteObject = new Note(helper.initialNotes[1])
-  await noteObject.save()
+  const noteObjects = helper.initialNotes
+    .map(note => new Note(note))
+  const promiseArray = noteObjects.map(note => note.save())
+  await Promise.all(promiseArray)
 })
 
-test.skip('all notes are returned', async () => {
+test('all notes are returned', async () => {
   const response = await api.get('/api/notes')
 
   expect(response.body.length).toBe(helper.initialNotes.length)
 })
 
-test.skip('a specific note is within the returned notes', async () => {
+test('a specific note is within the returned notes', async () => {
   const response = await api.get('/api/notes')
 
   const contents = response.body.map(r => r.content)
@@ -52,7 +51,7 @@ test.skip('a valid note can be added ', async () => {
   )
 })
 
-test.skip('note without content is not added', async () => {
+test('note without content is not added', async () => {
   const newNote = {
     important: true
   }
