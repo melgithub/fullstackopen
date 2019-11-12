@@ -2,8 +2,8 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Cait Flanders",
-  "author": "Cait Flanders",
+  "title": "Cait Greadfd",
+  "author": "Cait ssssssss",
   "url": "https://caitflanders.com/",
   "likes": 563
 }
