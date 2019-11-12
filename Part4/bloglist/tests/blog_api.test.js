@@ -15,6 +15,15 @@ describe('Blog Tests', () => {
     const response = await api.get('/api/blogs')
     expect(response.body.length).toBe(2)
   })
+
+  test('ID', async () => {
+    const response = await api.get('/api/blogs')
+    const identifier = response.body.map(r => r.id)
+    //expect(identifier[0]).toBeDefined()
+    for (let i = 0; i < identifier.length; i++) {
+      expect(identifier[i]).toBeDefined()
+    }
+  })
 })
 
 afterAll(() => {
