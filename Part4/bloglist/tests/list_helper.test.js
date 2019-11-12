@@ -46,7 +46,7 @@ const mostBlogInfo =
 const mostLikesInfo =
 {
   author: 'Edsger W. Dijkstra',
-  likes: 17 
+  likes: 17
 }
 
 const mostLikedSample =
