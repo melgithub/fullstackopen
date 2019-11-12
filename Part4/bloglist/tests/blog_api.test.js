@@ -14,7 +14,7 @@ beforeEach(async () => {
 })
 
 describe('Blog Tests', () => {
-  test('testing content type is returned as JSON', async () => {
+  test('content type is returned as JSON', async () => {
     await api
       .get('/api/blogs')
       .expect(200)
@@ -34,7 +34,7 @@ describe('Blog Tests', () => {
       expect(identifier[i]).toBeDefined()
     }
   })
-  test('a valid blog can be added ', async () => {
+  test('valid blog can be added ', async () => {
     const newBlog = {
       title: 'Generic Test Vlog',
       author:'Barbie',
@@ -55,6 +55,24 @@ describe('Blog Tests', () => {
     // Confirm new title data is in db entry
     const titles = blogsAtEnd.map(n => n.title)
     expect(titles).toContain(newBlog.title)
+  })
+  test('blog missing likes corrected and added', async () => {
+    const newBlog = {
+      title: 'Generic Test Vlog',
+      author:'Barbie',
+      url: 'https://en.wikipedia.org/',
+    }
+
+    if (newBlog.likes == undefined){
+      newBlog.likes = '0'}
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(200)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1)
   })
 })
 
