@@ -21,10 +21,3 @@ test('palindrome of releveler', () => {
 
   expect(result).toBe('releveler')
 })
-
-// // This one fails testing
-// test('palindrome of react', () => {
-//   const result = palindrome('react')
-
-//   expect(result).toBe('tkaer')
-// })

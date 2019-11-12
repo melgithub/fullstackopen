@@ -1,55 +1,49 @@
-// Controller for HTTP Routes
-const notesRouter = require('express').Router() // creating a new router object
+const notesRouter = require('express').Router()
 const Note = require('../models/note')
-
-// GET all resources
-// notesRouter.get('/', (request, response) => {
-//   Note.find({}).then(notes => {
-//     response.json(notes.map(note => note.toJSON())) // result is a new array where every item is mapped to new obj w/ toJSON method
-//   })
-// })
 
 notesRouter.get('/', async (request, response) => {
   const notes = await Note.find({})
   response.json(notes.map(note => note.toJSON()))
 })
 
-// Single resource fetch
-notesRouter.get('/:id', (request, response, next) => {
-  Note.findById(request.params.id)
-    .then(note => {
-      if (note) {
-        response.json(note.toJSON())
-      } else {
-        response.status(404).end()
-      }
-    })
-    .catch(error => next(error))
+notesRouter.get('/:id', async (request, response, next) => {
+  try {
+    const note = await Note.findById(request.params.id)
+    if (note) {
+      response.json(note.toJSON())
+    } else {
+      response.status(404).end()
+    }
+  } catch (exception) {
+    next(exception)
+  }
 })
 
-// Post a new note resource
-notesRouter.post('/', (request, response, next) => {
+notesRouter.post('/', async (request, response, next) => {
   const body = request.body
-
-  if (!body.content) {
-    return response.status(400).json({ error: 'Content missing' })
-  }
 
   const note = new Note({
     content: body.content,
-    important: body.important || false,
+    important: body.important === undefined ? false : body.important,
     date: new Date(),
   })
-
-  note.save() // promise chaining
-    .then(savedNote => savedNote.toJSON())
-    .then(savedAndFormattedNote => {
-      response.json(savedAndFormattedNote)
-    })
-    .catch(error => next(error))
+  try {
+    const savedNote = await note.save()
+    response.json(savedNote.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
 })
 
-// Update note importance (change a resource)
+notesRouter.delete('/:id', async (request, response, next) => {
+  try {
+    await Note.findByIdAndRemove(request.params.id)
+    response.status(204).end()
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 notesRouter.put('/:id', (request, response, next) => {
   const body = request.body
 
@@ -61,15 +55,6 @@ notesRouter.put('/:id', (request, response, next) => {
   Note.findByIdAndUpdate(request.params.id, note, { new: true })
     .then(updatedNote => {
       response.json(updatedNote.toJSON())
-    })
-    .catch(error => next(error))
-})
-
-// Single resource delete
-notesRouter.delete('/:id', (request, response, next) => {
-  Note.findByIdAndRemove(request.params.id)
-    .then(() => {
-      response.status(204).end()
     })
     .catch(error => next(error))
 })
