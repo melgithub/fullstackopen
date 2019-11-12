@@ -74,6 +74,20 @@ describe('Blog Tests', () => {
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1)
   })
+  test('blog missing title and URL not added', async () => {
+    const newBlog = {
+      url: 'https://en.wikipedia.org/',
+      likes: 86
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(newBlog)
+      .expect(400)
+
+    const blogsAtEnd = await helper.blogsInDb()
+    expect(blogsAtEnd.length).toBe(helper.initialBlogs.length)
+  })
 })
 
 afterAll(() => {
