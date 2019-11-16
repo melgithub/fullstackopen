@@ -34,7 +34,7 @@ describe('Blog Tests', () => {
       expect(identifier[i]).toBeDefined()
     }
   })
-  test('valid blog can be added ', async () => {
+  test.skip('valid blog can be added ', async () => {
     const newBlog = {
       title: 'Generic Test Vlog',
       author:'Barbie',
@@ -56,7 +56,26 @@ describe('Blog Tests', () => {
     const titles = blogsAtEnd.map(n => n.title)
     expect(titles).toContain(newBlog.title)
   })
-  test('blog missing likes corrected and added', async () => {
+
+  test('a blog can be deleted', async () => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd.length).toBe(
+      helper.initialBlogs.length - 1
+    )
+
+    const ids = blogsAtEnd.map(r => r.id)
+    expect(ids).not.toContain(blogToDelete.id)
+  })
+
+  test.skip('blog missing likes corrected and added', async () => {
     const newBlog = {
       title: 'Generic Test Vlog',
       author:'Barbie',
@@ -74,7 +93,8 @@ describe('Blog Tests', () => {
     const blogsAtEnd = await helper.blogsInDb()
     expect(blogsAtEnd.length).toBe(helper.initialBlogs.length + 1)
   })
-  test('blog missing title and URL not added', async () => {
+
+  test.skip('blog missing title and URL not added', async () => {
     const newBlog = {
       url: 'https://en.wikipedia.org/',
       likes: 86
