@@ -4,6 +4,7 @@ const bodyParser = require('body-parser')
 const app = express() // creates an express app
 const cors = require('cors') // middleware to allow requests from other origins
 const notesRouter = require('./controllers/notes')
+const usersRouter = require('./controllers/users')
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
 const logger = require('./utils/logger')
@@ -26,6 +27,7 @@ app.use(express.static('build')) //middleware to serve static files such as imag
 app.use(bodyParser.json())
 app.use(middleware.requestLogger)
 app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 
