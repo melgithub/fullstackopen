@@ -1,8 +1,8 @@
 POST http://localhost:3001/api/notes
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1pY2tleW1vdXNlIiwiaWQiOiI1ZGQwODA3Zjc1MDUxNDQxOTQzMzlkMjMiLCJpYXQiOjE1NzM5NzE4MzB9.Lf8sdh8SZkTaWazTr-nMXJQsDkFAEeCT9_I_orOIt88
 
 {
-    "content": "Minnie Mouse is so cute.",
-    "important": true,
-    "userId": "5dd0807f7505144194339d23"
+    "content": "Minnie Mouse is sooooooooo cute.",
+    "important": true
 }
