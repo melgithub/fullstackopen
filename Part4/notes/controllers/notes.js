@@ -36,6 +36,7 @@ notesRouter.post('/', async (request, response, next) => {
   const token = getTokenFrom(request)
 
   try {
+    // eslint-disable-next-line no-undef
     const decodedToken = jwt.verify(token, process.env.SECRET)
     if (!token || !decodedToken.id) {
       return response.status(401).json({
