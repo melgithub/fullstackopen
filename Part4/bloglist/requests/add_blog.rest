@@ -2,8 +2,9 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-  "title": "Cait Greadfd",
-  "author": "Cait ssssssss",
-  "url": "https://caitflanders.com/",
-  "likes": 563
+  "title": "Test",
+  "author": "Anonymous",
+  "url": "https://en.wikipedia.org/wiki/Cheese",
+  "likes": 13,
+  "user": "5dd1ea3224a37122546d20f6"
 }
