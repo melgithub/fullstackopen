@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRvbmFsZEQiLCJpZCI6IjVkZDIwYmM2MTM3MzIxMmFiOGRkNGE0MSIsImlhdCI6MTU3NDA0Njc3Nn0.TU3xge5YP_jGWEmsXd8gNQhXRJmu1Z_m-1a2o23Js0M
 
 {
-  "title": "Test",
-  "author": "Anonymous",
+  "title": "How to be annoying",
+  "author": "Donnie",
   "url": "https://en.wikipedia.org/wiki/Cheese",
-  "likes": 13,
-  "user": "5dd1ea3224a37122546d20f6"
+  "likes": 132
 }
