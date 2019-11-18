@@ -27,6 +27,7 @@ app.use(bodyParser.json())
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
+app.use(middleware.tokenExtractor)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
 

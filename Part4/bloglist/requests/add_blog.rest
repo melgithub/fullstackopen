@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkRvbmFsZEQiLCJpZCI6IjVkZDIwYmM2MTM3MzIxMmFiOGRkNGE0MSIsImlhdCI6MTU3NDA0Njc3Nn0.TU3xge5YP_jGWEmsXd8gNQhXRJmu1Z_m-1a2o23Js0M
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhZmZ5IiwiaWQiOiI1ZGQyMGY0ZGFiZGY4NjM5MzAwZDY5MDMiLCJpYXQiOjE1NzQwNDc1ODJ9.CxoZYirZEXkx2W4hL8DpPYz8xYdmeTIvP91kGRisJQY
 
 {
-  "title": "How to be annoying",
-  "author": "Donnie",
+  "title": "How to be extra cool",
+  "author": "Daffy",
   "url": "https://en.wikipedia.org/wiki/Cheese",
-  "likes": 132
+  "likes": 1322
 }

@@ -2,14 +2,7 @@ const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
-
-const getTokenFrom = request => {
-  const authorization = request.get('authorization')
-  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-    return authorization.substring(7)
-  }
-  return null
-}
+const tokenExtractor = require('../utils/middleware').tokenExtractor
 
 // HTTP Requests
 blogsRouter.get('/', async (request, response) => {
@@ -36,7 +29,7 @@ blogsRouter.get('/:id', async (request, response, next) => {
 
 blogsRouter.post('/', async (request, response, next) => {
   const body = request.body
-  const token = getTokenFrom(request)
+  const token = tokenExtractor(request)
 
   try {
     // eslint-disable-next-line no-undef
