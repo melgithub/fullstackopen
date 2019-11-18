@@ -3,6 +3,7 @@ const express = require('express') // dictates that we need express
 const bodyParser = require('body-parser')
 const app = express() // creates an express app
 const cors = require('cors') // middleware to allow requests from other origins
+const usersRouter = require('./controllers/users')
 const blogsRouter = require('./controllers/blogs')
 const middleware = require('./utils/middleware')
 const mongoose = require('mongoose')
@@ -22,6 +23,7 @@ mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true })
 app.use(cors())
 app.use(express.static('build')) //middleware to serve static files such as images, CSS files, and JS files
 app.use(bodyParser.json())
+app.use('/api/users', usersRouter)
 app.use('/api/blogs', blogsRouter)
 app.use(middleware.errorHandler)
 app.use(middleware.unknownEndpoint)
