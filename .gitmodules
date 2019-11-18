@@ -1,0 +1,3 @@
+[submodule "Part5/part2-notes"]
+	path = Part5/part2-notes
+	url = https://github.com/fullstackopen-2019/part2-notes.git
